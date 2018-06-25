@@ -33,8 +33,10 @@ class DocsService {
     }
 
     getGuidesOfSection (section) {
+        const userLocale = this.TranslateService.getUserLocale().toUpperCase();
         const domain = this.getDomainOfGuides();
-        const sectionContent = this.DOCS_HOMEPAGE_GUIDES[domain][section];
+
+        const sectionContent = _.get(this.DOCS_HOMEPAGE_GUIDES, `${userLocale}.${section}`, this.DOCS_HOMEPAGE_GUIDES[domain][section]);
 
         sectionContent.list = _.map(sectionContent.list, guide => {
             guide.text = this.$translate.instant(guide.text);
